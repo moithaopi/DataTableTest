@@ -50,7 +50,7 @@ $(document).ready(function(){
     );
 
     // Refilter the table
-    $('#filter').on('click', function () {
+    $('#filter').on('keydown click', function () {
         my_table.draw();
     });
 
