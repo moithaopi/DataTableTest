@@ -1,26 +1,4 @@
-
-$(document).ready(function(){
-
-    $("#from").datepicker({
-        "onSelect": function(date) {
-          minDateFilter = new Date(date).getTime();
-          oTable.fnDraw();
-        }
-      }).keyup(function() {
-        minDateFilter = new Date(this.value).getTime();
-        oTable.fnDraw();
-      });
-    
-      $("#to").datepicker({
-        "onSelect": function(date) {
-          maxDateFilter = new Date(date).getTime();
-          oTable.fnDraw();
-        }
-      }).keyup(function() {
-        maxDateFilter = new Date(this.value).getTime();
-        oTable.fnDraw();
-      });
-
+$(function(){
     $("#my_table").DataTable(
         {
             "ajax":{
@@ -38,8 +16,28 @@ $(document).ready(function(){
             },
         }
     );
-
+    
+    $("#from").datepicker({
+        "onSelect": function(date) {
+            minDateFilter = new Date(date).getTime();
+            oTable.fnDraw();
+        }
+        }).keyup(function() {
+        minDateFilter = new Date(this.value).getTime();
+        oTable.fnDraw();
+        });
+    
+        $("#to").datepicker({
+        "onSelect": function(date) {
+            maxDateFilter = new Date(date).getTime();
+            oTable.fnDraw();
+        }
+        }).keyup(function() {
+        maxDateFilter = new Date(this.value).getTime();
+        oTable.fnDraw();
+        });
 });
+
 
 
 // Date range filter
