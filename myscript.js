@@ -1,5 +1,37 @@
-$(function(){
-    var oTable =$("#my_table").DataTable(
+var minDate, maxDate;
+ 
+// Custom filtering function which will search data in column four between two values
+$.fn.dataTable.ext.search.push(
+    function( settings, data, dataIndex ) {
+        var min = minDate.val();
+        var max = maxDate.val();
+        var date = new Date( data[4] );
+ 
+        if (
+            ( min === null && max === null ) ||
+            ( min === null && date <= max ) ||
+            ( min <= date   && max === null ) ||
+            ( min <= date   && date <= max )
+        ) {
+            return true;
+        }
+        return false;
+    }
+);
+
+
+$(document).ready(function(){
+
+    // Create date inputs
+    minDate = new DateTime($('#from'), {
+        format: 'MMMM Do YYYY'
+    });
+    maxDate = new DateTime($('#to'), {
+        format: 'MMMM Do YYYY'
+    });
+
+    // DataTables initialisation
+    var my_table =$("#my_table").DataTable(
         {
             "ajax":{
                 "url":'data.json',
@@ -16,57 +48,10 @@ $(function(){
             },
         }
     );
-    
-    /*$("#from").datepicker({
-        "onSelect": function(date) {
-            minDateFilter = new Date(date).getTime();
-            oTable.fnDraw();
-        }
-        }).keyup(function() {
-        minDateFilter = new Date(this.value).getTime();
-        oTable.fnDraw();
-        });
-    
-        $("#to").datepicker({
-        "onSelect": function(date) {
-            maxDateFilter = new Date(date).getTime();
-            oTable.fnDraw();
-        }
-        }).keyup(function() {
-        maxDateFilter = new Date(this.value).getTime();
-        oTable.fnDraw();
-        });*/
-    $("#from,#to").datepicker({
-        format:"yy-mm-dd"
+
+    // Refilter the table
+    $('#from, #to').on('change', function () {
+        my_table.draw();
     });
-    
+
 });
-
-
-
-// Date range filter
-minDateFilter = "";
-maxDateFilter = "";
-
-$.fn.dataTableExt.afnFiltering.push(
-  function(oSettings, aData, iDataIndex) {
-    if (typeof aData._date == 'undefined') {
-      aData._date = new Date(aData[0]).getTime();
-    }
-
-    if (minDateFilter && !isNaN(minDateFilter)) {
-      if (aData._date < minDateFilter) {
-        return false;
-      }
-    }
-
-    if (maxDateFilter && !isNaN(maxDateFilter)) {
-      if (aData._date > maxDateFilter) {
-        return false;
-      }
-    }
-
-    return true;
-  }
-);
-
