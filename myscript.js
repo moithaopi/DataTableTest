@@ -1,5 +1,5 @@
 $(function(){
-    $("#my_table").DataTable(
+    var oTable =$("#my_table").DataTable(
         {
             "ajax":{
                 "url":'data.json',
