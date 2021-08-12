@@ -23,10 +23,10 @@ $(document).ready(function(){
 
     // Create date inputs
     minDate = new DateTime($('#from'), {
-        format: 'MMMM Do YYYY'
+        format: 'yy-mm-dd'
     });
     maxDate = new DateTime($('#to'), {
-        format: 'MMMM Do YYYY'
+        format: 'yy-mm-dd'
     });
 
     $("#my_table").DataTable(
