@@ -1,30 +1,25 @@
-var minDate, maxDate;
- 
-// Custom filtering function which will search data in column four between two values
-$.fn.dataTable.ext.search.push(
-    function( settings, data, dataIndex ) {
-        var min = minDate.val();
-        var max = maxDate.val();
-        var date = new Date( data[4] );
- 
-        if (
-            ( min === null && max === null ) ||
-            ( min === null && date <= max ) ||
-            ( min <= date   && max === null ) ||
-            ( min <= date   && date <= max )
-        ) {
-            return true;
-        }
-        return false;
-    }
-);
 
 $(document).ready(function(){
 
-    // Create date inputs
-    minDate=$("#from").datepicker();
+    $("#from").datepicker({
+        "onSelect": function(date) {
+          minDateFilter = new Date(date).getTime();
+          oTable.fnDraw();
+        }
+      }).keyup(function() {
+        minDateFilter = new Date(this.value).getTime();
+        oTable.fnDraw();
+      });
     
-    maxDate = $("#to").datepicker();
+      $("#to").datepicker({
+        "onSelect": function(date) {
+          maxDateFilter = new Date(date).getTime();
+          oTable.fnDraw();
+        }
+      }).keyup(function() {
+        maxDateFilter = new Date(this.value).getTime();
+        oTable.fnDraw();
+      });
 
     $("#my_table").DataTable(
         {
@@ -44,10 +39,32 @@ $(document).ready(function(){
         }
     );
 
-    // Refilter the table
-    $('#from, #to').on('change', function () {
-        table.draw();
-    });
-
 });
+
+
+// Date range filter
+minDateFilter = "";
+maxDateFilter = "";
+
+$.fn.dataTableExt.afnFiltering.push(
+  function(oSettings, aData, iDataIndex) {
+    if (typeof aData._date == 'undefined') {
+      aData._date = new Date(aData[0]).getTime();
+    }
+
+    if (minDateFilter && !isNaN(minDateFilter)) {
+      if (aData._date < minDateFilter) {
+        return false;
+      }
+    }
+
+    if (maxDateFilter && !isNaN(maxDateFilter)) {
+      if (aData._date > maxDateFilter) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+);
 
