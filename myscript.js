@@ -17,7 +17,7 @@ $(function(){
         }
     );
     
-    $("#from").datepicker({
+    /*$("#from").datepicker({
         "onSelect": function(date) {
             minDateFilter = new Date(date).getTime();
             oTable.fnDraw();
@@ -35,7 +35,11 @@ $(function(){
         }).keyup(function() {
         maxDateFilter = new Date(this.value).getTime();
         oTable.fnDraw();
-        });
+        });*/
+    $("#from,#to").datepicker({
+        format:"yy-mm-dd"
+    });
+    
 });
 
 
