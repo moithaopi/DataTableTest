@@ -50,7 +50,7 @@ $(document).ready(function(){
     );
 
     // Refilter the table
-    $('#from, #to').on('change', function () {
+    $('#filter').on('click', function () {
         my_table.draw();
     });
 
