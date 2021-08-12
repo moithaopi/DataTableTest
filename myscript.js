@@ -1,0 +1,19 @@
+$(document).ready(function(){
+    $("#my_table").DataTable(
+        {
+            "ajax":{
+                "url":'data.json',
+                "type":"GET",
+                "datatype":"json",
+            },
+            "columns":[
+                {"data":"Name"},
+                {"data":"Date"},
+                {"data":"Size"}
+            ],
+            "language":{
+                "emptyTable":"No data found"
+            },
+        }
+    );
+});
