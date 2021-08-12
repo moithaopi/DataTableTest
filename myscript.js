@@ -22,12 +22,9 @@ $.fn.dataTable.ext.search.push(
 $(document).ready(function(){
 
     // Create date inputs
-    minDate = new DateTime($('#from'), {
-        format: 'yy-mm-dd'
-    });
-    maxDate = new DateTime($('#to'), {
-        format: 'yy-mm-dd'
-    });
+    minDate=$("#from").datepicker();
+    
+    maxDate = $("#to").datepicker();
 
     $("#my_table").DataTable(
         {
