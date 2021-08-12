@@ -23,10 +23,10 @@ $.fn.dataTable.ext.search.push(
 $(document).ready(function(){
 
     // Create date inputs
-    minDate = new DateTime($('#from'), {
+    minDate = new DateTime($('#to'), {
         format: 'MMMM Do YYYY'
     });
-    maxDate = new DateTime($('#to'), {
+    maxDate = new DateTime($('#from'), {
         format: 'MMMM Do YYYY'
     });
 
@@ -50,7 +50,7 @@ $(document).ready(function(){
     );
 
     // Refilter the table
-    $('#filter').on('keydown click', function () {
+    $('#from, #to').on('change', function () {
         my_table.draw();
     });
 
